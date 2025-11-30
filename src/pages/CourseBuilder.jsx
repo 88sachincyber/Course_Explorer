@@ -3,7 +3,6 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import DefaultCourses from "../data/courses.json";
 
 const CourseBuilder = () => {
-  // Load courses from localStorage, fallback to JSON file
   const [courses, setCourses] = useLocalStorage(
     "customCourses",
     DefaultCourses.courses
@@ -69,17 +68,20 @@ const CourseBuilder = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Create / Edit Course</h1>
+    <div className="p-4 md:p-6 bg-gray-50 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-center md:text-left">
+        Create / Edit Course
+      </h1>
 
-      {/* Course Form */}
-      <div className="bg-white border p-5 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-3">New Course</h2>
+      {/* MAIN COURSE FORM */}
+      <div className="bg-white border p-4 md:p-6 rounded-lg shadow space-y-4">
+        <h2 className="text-xl font-semibold">New Course</h2>
 
+        {/* Course Fields */}
         <input
           type="text"
           placeholder="Course Title"
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-3 border rounded mb-3 text-sm"
           value={course.title}
           onChange={(e) => setCourse({ ...course, title: e.target.value })}
         />
@@ -87,14 +89,14 @@ const CourseBuilder = () => {
         <input
           type="text"
           placeholder="Subtitle"
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-3 border rounded mb-3 text-sm"
           value={course.subtitle}
           onChange={(e) => setCourse({ ...course, subtitle: e.target.value })}
         />
 
         <textarea
           placeholder="Description"
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-3 border rounded mb-3 text-sm min-h-[100px]"
           value={course.description}
           onChange={(e) =>
             setCourse({ ...course, description: e.target.value })
@@ -102,7 +104,7 @@ const CourseBuilder = () => {
         ></textarea>
 
         <select
-          className="w-full p-2 border rounded mb-4"
+          className="w-full p-3 border rounded mb-4 text-sm"
           value={course.difficulty}
           onChange={(e) =>
             setCourse({ ...course, difficulty: e.target.value })
@@ -113,40 +115,40 @@ const CourseBuilder = () => {
           <option>ADVANCED</option>
         </select>
 
-        {/* --- Topic Section --- */}
-        <h3 className="text-lg font-bold mb-2">Add Topics</h3>
+        {/* TOPIC SECTION */}
+        <h3 className="text-lg font-bold mt-4">Add Topics</h3>
 
         <input
           type="text"
           placeholder="Topic Title"
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-3 border rounded mb-3 text-sm"
           value={topic.title}
           onChange={(e) => setTopic({ ...topic, title: e.target.value })}
         />
 
         <textarea
           placeholder="Topic Description"
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-3 border rounded mb-3 text-sm min-h-[80px]"
           value={topic.description}
           onChange={(e) =>
             setTopic({ ...topic, description: e.target.value })
           }
         ></textarea>
 
-        {/* --- Subtopics --- */}
+        {/* SUBTOPIC SECTION */}
         <h4 className="font-semibold mb-2">Subtopics</h4>
 
         <input
           type="text"
           placeholder="Subtopic Title"
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-3 border rounded mb-3 text-sm"
           value={subtopic.title}
           onChange={(e) => setSubtopic({ ...subtopic, title: e.target.value })}
         />
 
         <textarea
           placeholder="Markdown Content"
-          className="w-full p-2 border rounded mb-2"
+          className="w-full p-3 border rounded mb-3 text-sm min-h-[120px]"
           value={subtopic.content}
           onChange={(e) =>
             setSubtopic({ ...subtopic, content: e.target.value })
@@ -154,15 +156,15 @@ const CourseBuilder = () => {
         ></textarea>
 
         <button
-          className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
+          className="bg-blue-600 text-white px-4 py-2 rounded w-full mb-3"
           onClick={addSubtopic}
         >
-          Add Subtopic
+          ➕ Add Subtopic
         </button>
 
         {/* Show Subtopics */}
         {topic.subtopics.length > 0 && (
-          <ul className="mb-4 pl-4 list-disc">
+          <ul className="mb-4 pl-4 list-disc text-sm">
             {topic.subtopics.map((s, idx) => (
               <li key={idx}>{s.title}</li>
             ))}
@@ -170,15 +172,15 @@ const CourseBuilder = () => {
         )}
 
         <button
-          className="bg-green-600 text-white px-4 py-2 rounded mb-4"
+          className="bg-green-600 text-white px-4 py-2 rounded w-full mb-4"
           onClick={addTopic}
         >
-          Add Topic
+          ➕ Add Topic
         </button>
 
-        {/* Show Topics */}
+        {/* Show all topics added to this course */}
         {course.topics.length > 0 && (
-          <ul className="pl-4 list-disc mb-5">
+          <ul className="pl-4 list-disc text-sm mb-5">
             {course.topics.map((t, idx) => (
               <li key={idx}>
                 <strong>{t.title}</strong> – {t.subtopics.length} subtopics
@@ -188,28 +190,31 @@ const CourseBuilder = () => {
         )}
 
         <button
-          className="bg-purple-600 text-white px-5 py-2 rounded w-full"
+          className="bg-purple-600 text-white px-5 py-3 rounded w-full"
           onClick={addCourse}
         >
-          Save Course
+          💾 Save Course
         </button>
 
-        {/* Reset */}
         <button
-          className="bg-red-600 text-white px-5 py-2 rounded w-full mt-4"
+          className="bg-red-600 text-white px-5 py-3 rounded w-full mt-3"
           onClick={resetData}
         >
-          Reset to Default Data
+          🔄 Reset to Default Data
         </button>
       </div>
 
-      {/* Display all saved courses */}
-      <h2 className="text-2xl font-semibold mt-8 mb-3">All Courses</h2>
-      <div className="grid grid-cols-1 gap-3">
+      {/* DISPLAY ALL COURSES */}
+      <h2 className="text-2xl font-semibold mt-10 mb-3">All Courses</h2>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {courses.map((c, idx) => (
-          <div key={idx} className="p-4 bg-white border rounded shadow">
+          <div
+            key={idx}
+            className="p-4 bg-white border rounded shadow hover:shadow-md transition text-sm"
+          >
             <h3 className="text-lg font-bold">{c.title}</h3>
-            <p className="text-sm text-gray-600">{c.subtitle}</p>
+            <p className="text-gray-600">{c.subtitle}</p>
             <p className="text-xs mt-1">{c.topics.length} topics</p>
           </div>
         ))}
