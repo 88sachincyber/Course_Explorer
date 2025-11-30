@@ -6,6 +6,7 @@ const Sidebar = ({
   setSelectedCourse,
   setSelectedTopic,
   setSelectedSubtopic,
+  onClose, // NEW: Add this prop for mobile close functionality
 }) => {
   const [search, setSearch] = useState("");
 
@@ -55,7 +56,18 @@ const Sidebar = ({
     .filter(Boolean);
 
   return (
-    <aside className="w-72 border-r bg-white h-full p-4 overflow-auto hidden md:block">
+    <aside className="w-full h-full bg-white p-4 overflow-auto flex flex-col">
+      {/* CLOSE BUTTON FOR MOBILE - Only shows when onClose is provided */}
+      {onClose && (
+        <button
+          onClick={onClose}
+          className="md:hidden self-end text-gray-600 hover:text-gray-900 mb-2 text-2xl font-light"
+          aria-label="Close sidebar"
+        >
+          ✕
+        </button>
+      )}
+
       <h2 className="text-xl font-bold mb-4">Courses</h2>
 
       {/* Search Box */}
@@ -67,7 +79,7 @@ const Sidebar = ({
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <ul className="space-y-3">
+      <ul className="space-y-3 flex-1 overflow-auto">
         {filteredCourses.length === 0 ? (
           <p className="text-gray-500">No matching results.</p>
         ) : (
@@ -84,6 +96,7 @@ const Sidebar = ({
                   setSelectedCourse(course);
                   setSelectedTopic(null);
                   setSelectedSubtopic(null);
+                  onClose?.(); // Close mobile sidebar when course is selected
                 }}
               >
                 {/* Course Title */}
@@ -118,6 +131,7 @@ const Sidebar = ({
                                 setSelectedCourse(course);
                                 setSelectedTopic(topic);
                                 setSelectedSubtopic(null);
+                                onClose?.(); // Close mobile sidebar when topic is selected
                               }}
                             >
                               {topic.title}
@@ -135,6 +149,7 @@ const Sidebar = ({
                                       setSelectedCourse(course);
                                       setSelectedTopic(topic);
                                       setSelectedSubtopic(sub);
+                                      onClose?.(); // Close mobile sidebar when subtopic is selected
                                     }}
                                   >
                                     {sub.title}

@@ -33,7 +33,7 @@ const CourseExplorer = () => {
     setSelectedSubtopic(subtopic);
   };
 
-  // PROGRESS TRACKING
+  // PROGRESS HANDLING
 
   const toggleCompletion = (course, topic, subtopic) => {
     const courseTitle = course.title;
@@ -41,14 +41,13 @@ const CourseExplorer = () => {
     const subtopicTitle = subtopic.title;
 
     setProgress((prev) => {
-      // Deep clone to avoid mutation issues
       const updated = JSON.parse(JSON.stringify(prev));
 
       if (!updated[courseTitle]) updated[courseTitle] = {};
-      if (!updated[courseTitle][topicTitle]) updated[courseTitle][topicTitle] = {};
+      if (!updated[courseTitle][topicTitle])
+        updated[courseTitle][topicTitle] = {};
 
-      // Toggle the completion status
-      updated[courseTitle][topicTitle][subtopicTitle] = 
+      updated[courseTitle][topicTitle][subtopicTitle] =
         !updated[courseTitle][topicTitle][subtopicTitle];
 
       return updated;
@@ -60,9 +59,7 @@ const CourseExplorer = () => {
   const getTopicProgress = (course, topic) => {
     const completedMap = progress[course.title]?.[topic.title] || {};
     const total = topic.subtopics.length;
-
     if (total === 0) return 0;
-
     const completed = Object.values(completedMap).filter(Boolean).length;
     return Math.round((completed / total) * 100);
   };
@@ -80,33 +77,45 @@ const CourseExplorer = () => {
     return total === 0 ? 0 : Math.round((completed / total) * 100);
   };
 
-  // UI RENDER
+  // RENDER
 
   return (
-    <div className="flex h-screen relative">
-      {/* Mobile Sidebar Toggle */}
+    <div className="flex h-screen overflow-hidden relative">
+      {/* MOBILE MENU BUTTON */}
       <button
-        className="md:hidden absolute top-4 left-4 z-50 bg-blue-600 text-white px-3 py-2 rounded shadow"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="md:hidden fixed top-4 left-4 z-[60] bg-blue-600 text-white px-4 py-2 rounded shadow-lg"
+        onClick={() => setSidebarOpen(true)}
       >
         ☰ Menu
       </button>
 
-      {/* Mobile Sidebar */}
+      {/* --------------------------
+          MOBILE SIDEBAR (DRAWER)
+      -------------------------- */}
       {sidebarOpen && (
-        <div className="absolute z-40 w-64 h-full bg-white shadow-md md:hidden">
-          <Sidebar
-            courses={courses}
-            selectedCourse={selectedCourse}
-            setSelectedCourse={handleCourseSelect}
-            setSelectedTopic={setSelectedTopic}
-            setSelectedSubtopic={setSelectedSubtopic}
-          />
-        </div>
+        <>
+          {/* BACKDROP */}
+          <div
+            className="fixed inset-0 bg-black bg-opacity-40 z-[45] md:hidden"
+            onClick={() => setSidebarOpen(false)}
+          ></div>
+
+          {/* SLIDE-IN SIDEBAR */}
+          <div className="fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white shadow-lg z-[50] md:hidden">
+            <Sidebar
+              courses={courses}
+              selectedCourse={selectedCourse}
+              setSelectedCourse={handleCourseSelect}
+              setSelectedTopic={setSelectedTopic}
+              setSelectedSubtopic={setSelectedSubtopic}
+              onClose={() => setSidebarOpen(false)}
+            />
+          </div>
+        </>
       )}
 
-      {/* Desktop Sidebar */}
-      <div className="hidden md:block">
+      {/* DESKTOP SIDEBAR */}
+      <div className="hidden md:block md:w-72 border-r bg-white">
         <Sidebar
           courses={courses}
           selectedCourse={selectedCourse}
@@ -116,8 +125,8 @@ const CourseExplorer = () => {
         />
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 p-6 overflow-auto bg-gray-50">
+          {/* MAIN CONTENT */}
+      <div className="flex-1 p-6 pt-16 md:pt-6 overflow-auto bg-gray-50">
         <Breadcrumbs
           course={selectedCourse}
           topic={selectedTopic}
@@ -135,7 +144,7 @@ const CourseExplorer = () => {
         {!selectedCourse ? (
           <p className="text-gray-600">Select a course from the sidebar.</p>
         ) : !selectedTopic ? (
-          // COURSE VIEW → SHOW TOPICS
+          // COURSE VIEW -> TOPICS
           <div>
             <h2 className="text-2xl font-bold">{selectedCourse.title}</h2>
 
@@ -169,9 +178,9 @@ const CourseExplorer = () => {
             </ul>
           </div>
         ) : (
-          // TOPIC VIEW → SHOW SUBTOPICS + CONTENT
+          // TOPIC VIEW -> SUBTOPICS + CONTENT
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* LEFT: Subtopics List */}
+            {/* LEFT: SUBTOPIC LIST */}
             <div className="lg:col-span-1">
               <h2 className="text-2xl font-bold mb-4">{selectedTopic.title}</h2>
               <h3 className="text-lg font-semibold mb-3">Subtopics</h3>
@@ -217,7 +226,7 @@ const CourseExplorer = () => {
               </div>
             </div>
 
-            {/* RIGHT: Content */}
+            {/* RIGHT: CONTENT VIEW */}
             <div className="lg:col-span-2">
               {selectedSubtopic ? (
                 <div>
@@ -230,7 +239,9 @@ const CourseExplorer = () => {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-64 bg-white rounded shadow">
-                  <p className="text-gray-500">Select a subtopic to view content</p>
+                  <p className="text-gray-500">
+                    Select a subtopic to view content
+                  </p>
                 </div>
               )}
             </div>
