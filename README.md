@@ -1,7 +1,10 @@
 # 📚 Course Explorer
 
 A fully interactive course exploration platform built using **React + Vite** and styled with **Tailwind CSS**, supporting Markdown content, progress tracking, search, and client-side persistence via localStorage.
+---
 
+## 🌐 Live Demo (Deployed Link)
+👉 **https://course-explorer-six.vercel.app**
 ---
 
 # 📑 Table of Contents
@@ -23,14 +26,14 @@ A fully interactive course exploration platform built using **React + Vite** and
 
 **Course Explorer** is a client-side learning platform that allows users to:
 
-- Browse multiple courses  
+- Browse courses  
 - View topics & subtopics  
-- Read content rendered from Markdown  
-- Track learning progress  
-- Search across course hierarchy  
-- View admin users list  
-- Add new custom courses  
-- Save everything locally without a backend  
+- Read Markdown content  
+- Track subtopic completion  
+- Search course hierarchy  
+- Add custom courses  
+- Reset data to defaults  
+- Access an admin view of users (read-only)  
 
 The app offers a responsive, accessible, and user-friendly interfaces.
 
@@ -131,7 +134,44 @@ This project uses a **component-driven, state-lifting architecture**, supported 
 - Import/export JSON  
 
 ---
+# 🔗 Application Routes (How to Navigate)
 
+Some pages are not visible in the UI menu. Use these paths:
+
+## **1️⃣ Home (Course Explorer)**
+```
+/
+```
+
+## **2️⃣ Admin Panel (Users List)**
+```
+/admin
+```
+
+## **3️⃣ Course Builder (Add Course)**
+```
+/builder
+```
+
+## **4️⃣ Deep Navigation Routes**
+### Course:
+```
+/course/:courseId
+```
+
+### Topic:
+```
+/course/:courseId/topic/:topicId
+```
+
+### Subtopic:
+```
+/course/:courseId/topic/:topicId/subtopic/:subtopicId
+```
+
+These can be shared/bookmarked for internal navigation.
+
+---
 # 🐞 Known Issues / Future Improvements
 
 | Improvement | Status |
