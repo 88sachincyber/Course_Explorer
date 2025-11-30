@@ -1,4 +1,4 @@
-# 📚 Course Explorer – React Intern Assignment
+# 📚 Course Explorer
 
 A fully interactive course exploration platform built using **React + Vite** and styled with **Tailwind CSS**, supporting Markdown content, progress tracking, search, and client-side persistence via localStorage.
 
@@ -15,8 +15,7 @@ A fully interactive course exploration platform built using **React + Vite** and
 5. Known Issues / Future Improvements  
 6. Tech Stack  
 7. Folder Structure  
-8. Screenshots (Optional)  
-9. Author  
+
 
 ---
 
@@ -33,7 +32,7 @@ A fully interactive course exploration platform built using **React + Vite** and
 - Add new custom courses  
 - Save everything locally without a backend  
 
-The app offers a responsive, accessible, and user-friendly interface, suitable for both desktop and mobile users.
+The app offers a responsive, accessible, and user-friendly interfaces.
 
 ---
 
@@ -41,7 +40,7 @@ The app offers a responsive, accessible, and user-friendly interface, suitable f
 
 ### 1️⃣ Clone the repository
 ```
-git clone https://github.com/your-username/course-explorer.git
+git clone https://github.com/88sachincyber/Course_Explorer
 cd course-explorer
 ```
 
@@ -57,11 +56,6 @@ npm run dev
 
 Navigate to:  
 👉 http://localhost:5173
-
-### 4️⃣ Build for production
-```
-npm run build
-```
 
 ---
 
@@ -164,26 +158,33 @@ This project uses a **component-driven, state-lifting architecture**, supported 
 ```
 src/
  ├── components/
+ │     ├── Sidebar.jsx
+ │     ├── Breadcrumbs.jsx
+ │     ├── MarkdownViewer.jsx
+ │     
+ │
  ├── pages/
+ │     ├── CourseExplorer.jsx
+ │     ├── Admin.jsx
+ │     └── AddCourse.jsx
+ │
  ├── hooks/
+ │     └── useLocalStorage.js
+ │
  ├── data/
+ │     ├── courses.json
+ │     └── users.json
+ │
  ├── App.jsx
  ├── main.jsx
  └── index.css
+
 ```
 
 ---
 
-# 👨‍💻 Author
-
-**Sachin Yadav**  
-B.Tech CSE  
-React • MERN • Java  
-GitHub: https://github.com/your-username  
-LinkedIn: https://linkedin.com/in/your-profile  
 
 ---
 
 # 🙏 Thank You!
 
-This project fulfills all requirements including nice-to-haves and bonus tasks.
